@@ -217,7 +217,7 @@ app.get('/check_log', async (req, res) => {
   const results = await pool.query('SELECT * FROM check_students()');
   const estudiantes = results.rows;
 
-  const student = req.query;
+  const student = req.query.student;
 
   if (!student) {
     return res.render('check_log', { title: 'Log de actividades', students: estudiantes, log:false });
