@@ -170,20 +170,28 @@ app.get('/repertoire', async (req, res) => {
   const filas = await pool.query('SELECT * FROM check_students()');
   const estudiantes = filas.rows;
 
-  const student = req.query;
+  const student = req.query.student;
 
   if (!student) {
     return res.render('repertoire', { title: 'Repertorio', students: estudiantes, repertoirs:false });
   }
   
   else{
-    pool.query('SELECT * FROM get_student_repertoire($1)', [student], (err, result) => {
-      if (err) {
-        console.error('Error fetching repertoire:', err);
-        return res.status(500).send('Internal Server Error');
-      }
-      res.render('repertoire', { title: 'Repertorio', students: estudiantes, repertoirs: true, repertoire: result.rows });
-    });
+    try{
+      pool.query('SELECT * FROM get_student_repertoire($1)', [student], (err, result) => {
+        if (err) {
+          console.error('Error fetching repertoire:', err);
+          return res.status(500).send('Internal Server Error');
+        }
+        if (result.rows.length === 0) {
+          return res.render('repertoire', { title: 'Repertorio', students: estudiantes, repertoirs:false });
+        }
+        res.render('repertoire', { title: 'Repertorio', students: estudiantes, repertoirs: true, repertoire: result.rows });
+      });
+    } catch (err) {
+      console.error('Error fetching repertoire:', err);
+      return res.render('repertoire', { title: 'Repertorio', students: estudiantes, repertoirs:false });
+    }
   }
 });
 
@@ -194,9 +202,9 @@ app.get('/extra_class', async (req, res) => {
 });
 
 app.post('/repertoire/add', async (req, res) => {
-  const { student_id, repertoire } = req.body;
+  const { estudiante_id, repertorio } = req.body;
   try {
-    await pool.query('CALL add_repertoire($1, $2);', [student_id, repertoire]);
+    await pool.query('CALL add_repertoire($1, $2);', [estudiante_id, repertorio]);
     res.redirect('/repertoire'); 
   } catch (err) {
     console.error('Error guardando repertorio:', err);

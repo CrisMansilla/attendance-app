@@ -29,7 +29,7 @@
         <% repertoire.forEach(item => { %>
           <tr>
             <td><%= item.pieza %></td>
-            <td><%= item.fecha_adicion %></td>
+            <td><%= item.fecha %></td>
           </tr>
         <% }) %>
       </tbody>
@@ -50,29 +50,30 @@
     </form>
 
     <script>
-        const agregarBtn = document.getElementById('showAddForm');
-        const addForm = document.getElementById('addForm');
-        const estudianteSelect = document.getElementById('estudiante');
-        const hiddenId = document.getElementById('hiddenEstudianteId');
-        const textarea = document.getElementById('textoRepertorio');
-        const contador = document.getElementById('contador');
+        document.addEventListener('DOMContentLoaded', () => {
+            const agregarBtn = document.getElementById('showAddForm');
+            const addForm = document.getElementById('addForm');
+            const estudianteSelect = document.getElementById('student');
+            const hiddenId = document.getElementById('hiddenEstudianteId');
+            const textarea = document.getElementById('textoRepertorio');
+            const contador = document.getElementById('contador');
 
-        agregarBtn.addEventListener('click', () => {
+            agregarBtn.addEventListener('click', () => {
             const estudianteId = estudianteSelect.value;
             if (!estudianteId) {
-            alert('Por favor selecciona un estudiante primero.');
-            return;
+                alert('Por favor selecciona un estudiante primero.');
+                return;
             }
 
             hiddenId.value = estudianteId;
             addForm.style.display = 'block';
             addForm.scrollIntoView({ behavior: 'smooth' });
-        });
+            });
 
-        // contador de caracteres
-        textarea.addEventListener('input', () => {
+            textarea.addEventListener('input', () => {
             contador.textContent = `${textarea.value.length}/250`;
+            });
         });
-    
     </script>
+
 </body>

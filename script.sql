@@ -78,11 +78,16 @@ BEGIN ATOMIC
 END;
 
 CREATE OR REPLACE FUNCTION get_student_repertoire(p_student_id INTEGER)
-RETURNS TABLE (piece_name VARCHAR, date TIMESTAMP)
+RETURNS TABLE (nombre VARCHAR, fecha VARCHAR, pieza VARCHAR)
 LANGUAGE SQL
 AS $$
-    SELECT piece_name, date FROM repertoire 
-    WHERE student_id = p_student_id 
+    SELECT 
+        s.name as nombre,
+        r.piece_name as pieza,
+        to_char(date, 'DD/MM/YYYY') as fecha 
+    FROM repertoire r
+    INNER JOIN student s ON r.student_id = s.id 
+    WHERE r.student_id = p_student_id 
     ORDER BY date ASC;
 $$;
 
