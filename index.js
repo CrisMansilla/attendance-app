@@ -17,8 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
+  connectionString: "postgresql://postgres:postgres@db:5432/attendance",
+  //ssl: { rejectUnauthorized: false }
 });
 
 app.get('/', (req, res) => {
@@ -220,7 +220,7 @@ app.get('/check_log', async (req, res) => {
   const student = req.query.student;
 
   if (!student) {
-    return res.render('check_log', { title: 'Log de actividades', students: estudiantes, log:false });
+    return res.render('check_log', { title: 'Log de actividades', students: estudiantes, log:false, modal:false });
   }
 
   else{
@@ -229,7 +229,10 @@ app.get('/check_log', async (req, res) => {
         console.error('Error fetching log:', err);
         return res.status(500).send('Internal Server Error');
       }
-      res.render('check_log', { title: 'Log de actividades', students: estudiantes, log: true, logs: result.rows });
+      if (result.rows.length === 0) {
+        return res.render('check_log', { title: 'Log de actividades', students: estudiantes, log:false, modal: true });
+      }
+      res.render('check_log', { title: 'Log de actividades', students: estudiantes, log: true, logs: result.rows, modal: false });
     });
   }
  

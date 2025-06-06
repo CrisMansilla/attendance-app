@@ -11,8 +11,7 @@
         </div>
         
         <div class="col-12 mt-3">
-            <button type="submit" class="btn btn-primary me-2">Ver Repertorio</button>
-            <button type="button" id="showAddForm" class="btn btn-success">Agregar Repertorio</button>
+            <button type="submit" class="btn btn-primary me-2">Ver clases realizadas</button>
         </div>
     </form>
     <% if (log) { %>
@@ -33,5 +32,8 @@
         <% }) %>
       </tbody>
     </table>
+    <% } %>
+    <% if (modal) { %>
+      <p>No existen registros de clases para ese estudiante</p>
     <% } %>
 </body>
