@@ -42,6 +42,7 @@
     </div>
   </div>
 
+  <% var total = 0; %>
   
   <% if (mensual) { %>
     <h2 class="mt-4">Asistencia del mes <%= month %> del <%= year %></h2>
@@ -55,6 +56,7 @@
       </thead>
       <tbody>
         <% attendance.forEach(item => { %>
+          <% total += item.pago; %>
           <tr>
             <td><%= item.nombre %></td>
             <td><%= item.asistencia %></td>
@@ -67,6 +69,11 @@
         <% }) %>
       </tbody>
     </table>
+    <% if (Math.floor(total / 1000) > 0 && total % 1000 > 0) { %>
+      <p>Total a pagar para el mes: $<%= Math.floor(total / 1000) %>.<%= total % 1000 %> CLP</p>
+    <% } else if (Math.floor(total / 1000) > 0 && total % 1000 === 0) { %>
+      <p>Total a pagar para el mes: $<%= Math.floor(total / 1000) %>.000 CLP</p>
+    <% } %>
   <% } %>
 
   <% if (individual) { %>
