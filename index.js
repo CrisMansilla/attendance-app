@@ -17,8 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const pool = new Pool({
-  connectionString: "postgresql://postgres:postgres@db:5432/attendance",
-  //ssl: { rejectUnauthorized: false }
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
 });
 
 app.get('/', (req, res) => {
