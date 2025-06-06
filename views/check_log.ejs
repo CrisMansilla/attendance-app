@@ -1,0 +1,37 @@
+<body>
+    <form action="/check_log" method="get" class="row g-3">
+        <div class="col-6">
+            <label for="student">Selecciona al estudiante</label>
+            <select name="student" id="student" class="form-select" required>
+                <option value="">Selecciona un estudiante</option>
+            <% students.forEach(student => { %>
+                <option value="<%= student.aidi %>"><%= student.nombre %></option>
+            <% }) %>
+            </select>
+        </div>
+        
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary me-2">Ver Repertorio</button>
+            <button type="button" id="showAddForm" class="btn btn-success">Agregar Repertorio</button>
+        </div>
+    </form>
+    <% if (log) { %>
+    <h2 class="mt-4">Actividades realizadas a  <%= logs[0].nombre %></h2>
+    <table class="table table-striped mt-2">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Actividad realizada</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% logs.forEach(item => { %>
+          <tr>
+            <td><%= item.fecha %></td>
+            <td><%= item.actividades %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } %>
+</body>

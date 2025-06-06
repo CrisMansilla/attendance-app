@@ -1,0 +1,53 @@
+<body>
+  <table class="table table-striped">
+    <thead>
+        <tr>
+        <th>Nombre</th>
+        <th>Fecha</th>
+        <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% clases.forEach(clase => { %>
+        <tr>
+            <td><%= clase.nombre %></td>
+            <td><%= clase.fecha %></td>
+            <td>
+                <button 
+                    class="btn btn-sm btn-warning" 
+                    onclick="mostrarEditor('<%= clase.at_aidi %>')">
+                    Agregar actividad
+                </button>
+            </td>
+        </tr>
+        <tr id="editor-<%= clase.at_aidi %>" style="display: none;">
+            <td colspan="3">
+            <form action="/add_log/add_activity" method="POST">
+                <input type="hidden" name="lesson_id" id="lesson_id" value="<%= clase.at_aidi %>">
+                <textarea name="activity" id="activity" maxlength="250" rows="8" class="form-control mb-2" oninput="actualizarContador(this, '<%= clase.at_aidi %>')"></textarea>
+                <div class="d-flex justify-content-between">
+                <small id="contador-<%= clase.at_aidi %>">0 / 250</small>
+                <button type="submit" class="btn btn-success btn-sm">Guardar</button>
+                </div>
+            </form>
+            </td>
+        </tr>
+        <% }) %>
+    </tbody>
+    </table>
+    <script>
+        function mostrarEditor(id) {
+            const editor = document.getElementById(`editor-${id}`);
+            if (editor.style.display === 'none') {
+            editor.style.display = '';
+            } else {
+            editor.style.display = 'none';
+            }
+        }
+
+        function actualizarContador(textarea, id) {
+            const contador = document.getElementById(`contador-${id}`);
+            contador.textContent = `${textarea.value.length} / 250`;
+        }
+    </script>
+</body>

@@ -1,0 +1,78 @@
+<body>
+    <form action="/repertoire" method="get" class="row g-3">
+        <div class="col-6">
+            <label for="student">Selecciona al estudiante</label>
+            <select name="student" id="student" class="form-select" required>
+                <option value="">Selecciona un estudiante</option>
+            <% students.forEach(student => { %>
+                <option value="<%= student.aidi %>"><%= student.nombre %></option>
+            <% }) %>
+            </select>
+        </div>
+        
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-primary me-2">Ver Repertorio</button>
+            <button type="button" id="showAddForm" class="btn btn-success">Agregar Repertorio</button>
+        </div>
+    </form>
+
+    <% if (repertoirs) { %>
+    <h2 class="mt-4">Repertorio de <%= repertoire[0].nombre %></h2>
+    <table class="table table-striped mt-2">
+      <thead>
+        <tr>
+          <th>Pieza</th>
+          <th>Fecha de Adición</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% repertoire.forEach(item => { %>
+          <tr>
+            <td><%= item.pieza %></td>
+            <td><%= item.fecha_adicion %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <% } %>
+
+    <!-- Formulario oculto para agregar repertorio -->
+    <form id="addForm" action="/repertoire/add" method="post" class="mt-4" style="display: none;">
+        <input type="hidden" name="estudiante_id" id="hiddenEstudianteId">
+        
+        <div class="mb-3">
+            <label for="textoRepertorio" class="form-label">Nuevo repertorio</label>
+            <textarea id="textoRepertorio" name="repertorio" class="form-control" maxlength="250" rows="3" required></textarea>
+            <div class="form-text" id="contador">0/250</div>
+        </div>
+
+        <button type="submit" class="btn btn-success">Guardar</button>
+    </form>
+
+    <script>
+        const agregarBtn = document.getElementById('showAddForm');
+        const addForm = document.getElementById('addForm');
+        const estudianteSelect = document.getElementById('estudiante');
+        const hiddenId = document.getElementById('hiddenEstudianteId');
+        const textarea = document.getElementById('textoRepertorio');
+        const contador = document.getElementById('contador');
+
+        agregarBtn.addEventListener('click', () => {
+            const estudianteId = estudianteSelect.value;
+            if (!estudianteId) {
+            alert('Por favor selecciona un estudiante primero.');
+            return;
+            }
+
+            hiddenId.value = estudianteId;
+            addForm.style.display = 'block';
+            addForm.scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // contador de caracteres
+        textarea.addEventListener('input', () => {
+            contador.textContent = `${textarea.value.length}/250`;
+        });
+    
+    </script>
+</body>

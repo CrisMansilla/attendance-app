@@ -1,0 +1,91 @@
+<body>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6">
+        <form action="/summary" method="get" class="g-3 border p-3 rounded shadow-sm bg-light">
+          <h2>Asistencia mensual total</h2>
+          <div class="mb-3">
+            <label for="month">Mes de vista</label>
+            <input type="number" name="month" id="month" class="form-control" placeholder="Mes (1-12)" min="1" max="12">
+          </div>
+          <div class="mb-3">
+            <label for="year">Año de vista</label>
+            <input type="number" name="year" id="year" class="form-control" placeholder="Año (2025)" min="2025" value="2025">
+          </div>
+          <button type="submit" class="btn btn-primary">Ver Asistencia</button>
+        </form>
+      </div>
+
+      <div class="col-md-6">
+        <form action="/summary" method="get" class="g-3 border p-3 rounded shadow-sm bg-light">
+          <h2>Asistencia mensual por estudiante</h2>
+          <div class="mb-3">
+            <label for="estudiante">Selecciona al estudiante</label>
+            <select name="estudiante" id="estudiante" class="form-select">
+              <option value="">Selecciona un estudiante</option>
+              <% students.forEach(student => { %>
+                <option value="<%= student.aidi %>"><%= student.nombre %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="mes">Mes de vista</label>
+            <input type="number" name="month" id="month" class="form-control" placeholder="Mes (1-12)" min="1" max="12">
+          </div>
+          <div class="mb-3">
+            <label for="anio">Año de vista</label>
+            <input type="number" name="year" id="year" class="form-control" placeholder="Año (2025)" min="2025" value="2025">
+          </div>
+          <button type="submit" class="btn btn-primary">Ver Asistencia</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  
+  <% if (mensual) { %>
+    <h2 class="mt-4">Asistencia del mes <%= month %> del <%= year %></h2>
+    <table class="table table-striped mt-2">
+      <thead>
+        <tr>
+          <th>Estudiante</th>
+          <th>Cantidad de clases en el mes</th>
+          <th>Paga total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% attendance.forEach(item => { %>
+          <tr>
+            <td><%= item.nombre %></td>
+            <td><%= item.asistencia %></td>
+            <% if (Math.floor(item.pago / 1000) > 0 && item.pago % 1000 > 0) { %>
+              <td>$<%= Math.floor(item.pago / 1000) %>.<%= item.pago % 1000 %> CLP</td>
+            <% } else if (Math.floor(item.pago / 1000) > 0 && item.pago % 1000 === 0) { %>
+              <td>$<%= Math.floor(item.pago / 1000) %>.000 CLP</td>
+            <% } %>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <% if (individual) { %>
+    <h2 class="mt-4">Asistencia individual del mes <%= month %> del <%= year %></h2>
+    <table class="table table-striped mt-2">
+      <thead>
+        <tr>
+          <th>Estudiante</th>
+          <th>Día de clase</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% asistencia.forEach(item => { %>
+          <tr>
+            <td><%= item.nombre %></td>
+            <td><%= item.dia_asistencia %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  <% } %>
+</body>

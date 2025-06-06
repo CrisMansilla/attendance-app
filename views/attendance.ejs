@@ -1,0 +1,66 @@
+<body>
+    <h1 class="mb-4">Marcar presente</h1>
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% students.forEach(student => { %>
+        <tr>
+          <td><%= student.nombre %></td>
+          <td>
+            <button 
+            class="btn btn-primary btn-sm" 
+            data-bs-toggle="modal" 
+            data-bs-target="#confirmModal" 
+            data-student-name="<%= student.nombre %>" 
+            data-student-id="<%= student.aidi %>">
+            Marcar Presente
+            </button>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirmar asistencia</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro que quieres marcar presente a <strong id="modalStudentName"></strong>?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <a href="#" class="btn btn-primary" id="confirmBtn">Sí, marcar presente</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const confirmModal = document.getElementById('confirmModal');
+    confirmModal.addEventListener('show.bs.modal', function (event) {
+      const button = event.relatedTarget;
+      const studentName = button.getAttribute('data-student-name');
+      const studentId = button.getAttribute('data-student-id');
+
+      // Cambia el contenido del modal
+      const modalStudentName = document.getElementById('modalStudentName');
+      modalStudentName.textContent = studentName;
+
+      // Cambia el href del botón de confirmación
+      const confirmBtn = document.getElementById('confirmBtn');
+      confirmBtn.href = `/students/mark_attendance/${studentId}`;
+    });
+  </script>
+
+</body>
+

@@ -1,0 +1,19 @@
+<body>
+    <!-- views/index.ejs -->
+    <h1 class="mb-4">Bienvenido a la aplicación de marcaje de asistencia</h1>
+    <p>Los estudiantes que tienes para hoy son:</p>
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% students.forEach(student => { %>
+        <tr>
+          <td><%= student.nombre %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>

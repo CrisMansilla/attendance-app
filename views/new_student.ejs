@@ -1,0 +1,25 @@
+<form action="/add_student" method="post">
+    <h1>Agregar nuevo estudiante</h1>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div>
+    <div class="mb-3">
+        <label for="value" class="form-label">Valor</label>
+        <input type="number" class="form-control" id="valor" name="valor" required>
+    </div>
+    <div class="mb-3">
+        <label for="dow" class="form-label">Día de la semana de la clase</label>
+        <select class="form-select" id="dow" name="dow" required>
+            <option value="" disabled selected>Seleccione un día</option>
+            <option value="1">Lunes</option>
+            <option value="2">Martes</option>
+            <option value="3">Miércoles</option>
+            <option value="4">Jueves</option>
+            <option value="5">Viernes</option>
+            <option value="6">Sábado</option>
+            <option value="0">Domingo</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar estudiante</button>
+</form>

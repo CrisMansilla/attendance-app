@@ -1,0 +1,80 @@
+<body>
+  <h1>Recuperación de clases</h1>
+  <div class="row g-3">
+    <div class="col-6">
+      <label for="student">Selecciona al estudiante</label>
+      <select name="student" id="student" class="form-select" required>
+        <option value="">Selecciona un estudiante</option>
+        <% students.forEach(student => { %>
+          <option value="<%= student.aidi %>" data-student-name="<%= student.nombre %>"><%= student.nombre %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="col-6 align-self-end">
+      <button
+        class="btn btn-primary btn-sm"
+        data-bs-toggle="modal"
+        data-bs-target="#confirmModal"
+        id="openModalBtn"
+        disabled
+      >
+        Marcar Presente
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmModalLabel">Confirmar asistencia</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          ¿Estás seguro que quieres marcar presente a <strong id="modalStudentName"></strong>?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <a href="#" class="btn btn-primary" id="confirmBtn">Sí, marcar presente</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const studentSelect = document.getElementById('student');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const modalStudentName = document.getElementById('modalStudentName');
+
+    // Habilita el botón solo cuando se selecciona un estudiante
+    studentSelect.addEventListener('change', () => {
+      const selectedOption = studentSelect.options[studentSelect.selectedIndex];
+      const studentId = selectedOption.value;
+      const studentName = selectedOption.getAttribute('data-student-name');
+
+      if (studentId) {
+        openModalBtn.disabled = false;
+        openModalBtn.dataset.studentId = studentId;
+        openModalBtn.dataset.studentName = studentName;
+      } else {
+        openModalBtn.disabled = true;
+        openModalBtn.removeAttribute('data-student-id');
+        openModalBtn.removeAttribute('data-student-name');
+      }
+    });
+
+    // Cuando se abre el modal, actualiza con los datos actuales
+    const confirmModal = document.getElementById('confirmModal');
+    confirmModal.addEventListener('show.bs.modal', function (event) {
+      const button = document.getElementById('openModalBtn');
+      const studentName = button.dataset.studentName;
+      const studentId = button.dataset.studentId;
+
+      modalStudentName.textContent = studentName;
+      confirmBtn.href = `/students/mark_attendance/${studentId}`;
+    });
+  </script>
+</body>

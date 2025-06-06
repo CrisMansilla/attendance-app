@@ -1,0 +1,25 @@
+# Environment variables
+.env
+
+# Node dependencies
+node_modules/
+
+# VS Code settings and Dev Container stuff (optional but common)
+.vscode/
+.devcontainer/devcontainer.env
+
+# Docker artifacts (optional, but helpful if you build volumes locally)
+docker-compose.override.yml
+*.local.yml
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+mierda.txt

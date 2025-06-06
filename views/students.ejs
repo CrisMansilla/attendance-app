@@ -1,0 +1,36 @@
+<!-- views/students.ejs -->
+<h1>Student Management</h1>
+
+<div class="mb-3">
+  <a href="/students/new" class="btn btn-primary">Add New Student</a>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombre del estudiante</th>
+        <th>Valor de la clase</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% students.forEach(student => { %>
+        <tr>
+          <td><%= student.nombre %></td>
+          <% if (Math.floor(student.valor_clase % 1000 == 0)) { %>
+            <td>$<%= Math.floor(student.valor_clase / 1000) %>.000</td>
+          <% } else { %>
+            <td>$<%= Math.floor(student.valor_clase / 1000) %>.<%= student.valor_clase % 1000 %></td>
+          <% } %>
+          <td>
+            <a href="/students/edit/<%= student.aidi %>" class="btn btn-warning btn-sm">Edit</a>
+            <form action="/students/<%= student.aidi %>" method="POST" class="d-inline">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" class="btn btn-danger btn-sm" value ="<%= student.aidi %>">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<!-- list, form, etc. -->
