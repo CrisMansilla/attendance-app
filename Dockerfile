@@ -1,23 +1,28 @@
 FROM node:20
 
-# Set the locale environment variables early
+# ── Locales chilenas ────────────────────────────────────────────────────────────
 ENV LANG=es_CL.UTF-8 \
     LANGUAGE=es_CL:es \
     LC_ALL=es_CL.UTF-8
 
-# Install locales and generate es_CL.UTF-8
 RUN apt-get update && \
     apt-get install -y locales && \
     sed -i '/es_CL.UTF-8/s/^# //g' /etc/locale.gen && \
     locale-gen
-# Set the locale environment variables again after generating locales
+
+# ── App ─────────────────────────────────────────────────────────────────────────
 WORKDIR /app
 
+# 1) dependencias
 COPY package*.json ./
 RUN npm install
 
+# 2) **copia todo el código restante**
+COPY . .
+
 EXPOSE 3000
 CMD ["node", "index.js"]
+
 
 # Use the following command to build the Docker image
 # docker build -t attendance-app:latest .
