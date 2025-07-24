@@ -77,6 +77,14 @@ BEGIN ATOMIC
     INSERT INTO repertoire (student_id, piece_name) VALUES (p_student_id, p_piece_name);
 END;
 
+CREATE PROCEDURE disable_student(p_id INTEGER)
+LANGUAGE SQL
+BEGIN ATOMIC
+    update table student
+    set active=false
+    where id = p_id;
+END;
+
 CREATE OR REPLACE FUNCTION get_student_repertoire(p_student_id INTEGER)
 RETURNS TABLE (nombre VARCHAR, fecha VARCHAR, pieza VARCHAR)
 LANGUAGE SQL
@@ -95,7 +103,9 @@ CREATE OR REPLACE FUNCTION check_students()
 RETURNS TABLE (aidi INT, nombre TEXT, valor_clase integer)
 LANGUAGE SQL
 AS $$
-  SELECT id as aidi,name as nombre, value as valor_clase FROM student;
+  SELECT id as aidi,name as nombre, value as valor_clase 
+FROM student
+where active=true;
 $$;
 
 CREATE OR REPLACE FUNCTION get_student_lesson_log(p_student_id INTEGER)
@@ -181,4 +191,13 @@ AS $$
     from student s
     where 
 	s.id = p_id;
+$$;
+
+CREATE OR REPLACE FUNCTION months()
+RETURNS table (mesesito char(2))
+LANGUAGE SQL
+AS $$
+	select to_char(date, 'MM') 
+	from attendance 
+	group by to_char(date, 'MM');
 $$;

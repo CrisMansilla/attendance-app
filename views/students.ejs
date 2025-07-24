@@ -1,8 +1,8 @@
 <!-- views/students.ejs -->
-<h1>Student Management</h1>
+<h1>Administrar estudiantes</h1>
 
 <div class="mb-3">
-  <a href="/students/new" class="btn btn-primary">Add New Student</a>
+  <a href="/students/new" class="btn btn-primary">Agregar nuevo estudiante</a>
 </div>
 <div class="table-responsive">
   <table class="table table-striped">
@@ -23,14 +23,53 @@
             <td>$<%= Math.floor(student.valor_clase / 1000) %>.<%= student.valor_clase % 1000 %></td>
           <% } %>
           <td>
-            <a href="/students/edit/<%= student.aidi %>" class="btn btn-warning btn-sm">Edit</a>
-            <form action="/students/<%= student.aidi %>" method="POST" class="d-inline">
-              <input type="hidden" name="_method" value="DELETE">
-              <button type="submit" class="btn btn-danger btn-sm" value ="<%= student.aidi %>">Delete</button>
+            <a href="/students/edit/<%= student.aidi %>" class="btn btn-warning btn-sm">Editar</a>
+            <form id="disableForm-<%= student.aidi %>" action="/students/delete/<%= student.aidi %>" method="POST" class="d-inline">
+              <button type="button" class="btn btn-danger btn-sm" onclick="confirmDisable('<%= student.aidi %>', '<%= student.nombre %>')">Deshabilitar</button>
             </form>
           </td>
         </tr>
       <% }) %>
     </tbody>
   </table>
+
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">Confirmar deshabilitación</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        ¿Estás seguro que quieres deshabilitar al estudiante
+        <strong id="studentNameInModal" class="text-warning">[nombre]</strong>?
+        Esta acción no se puede deshacer.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" id="confirmDisableBtn">Sí, deshabilitar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- list, form, etc. -->
+<script>
+  let currentStudentId = null;
+
+  function confirmDisable(studentId, studentName) {
+    currentStudentId = studentId;
+
+    // Inject the name into the modal
+    document.getElementById('studentNameInModal').textContent = studentName;
+
+    const modal = new bootstrap.Modal(document.getElementById('confirmModal'));
+    modal.show();
+  }
+
+  document.getElementById('confirmDisableBtn').addEventListener('click', function () {
+    if (currentStudentId) {
+      document.getElementById(`disableForm-${currentStudentId}`).submit();
+    }
+  });
+</script>

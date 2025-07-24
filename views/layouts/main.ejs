@@ -12,16 +12,44 @@
   />
 </head>
 <body>
-  <!-- Navbar or header -->
-  <nav class="navbar navbar-dark bg-dark p-3">
-    <a href="/" class="navbar-brand">Ir al inicio</a>
-    <a href="/students" class="nav-link text-white">Estudiantes</a>
-    <a href="/attendance" class="nav-link text-white">Tomar asistencia</a>
-    <a href="/repertoire" class="nav-link text-white">Revisar repertorio</a>
-    <a href="/check_log" class="nav-link text-white">Revisar contenidos</a>
-    <a href="/add_log" class="nav-link text-white">Agregar contenido visto de la clase</a>
-    <a href="/summary" class="nav-link text-white">Revisión mensual</a>
-    <a href="/extra_class" class="nav-link text-white">Recuperación de clases</a>
+  <!-- Responsive Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Ir al inicio</a>
+
+      <!-- Hamburger / toggle button -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Collapsible content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/students">Estudiantes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/attendance">Tomar asistencia</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/repertoire">Revisar repertorio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/check_log">Revisar contenidos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/add_log">Agregar contenido visto de la clase</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/summary">Revisión mensual</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="/extra_class">Recuperación de clases</a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </nav>
 
   <div class="container mt-4">

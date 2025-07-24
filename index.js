@@ -90,7 +90,9 @@ app.get('/summary', async (req, res) => {
   try {
     // Traemos todos los estudiantes para el select siempre
     const estudiantesQuery = await pool.query('SELECT * FROM check_students()');
+    const mesesQuery = await pool.query('SELECT * FROM months()');
     const estudiantes = estudiantesQuery.rows;
+    const meses = mesesQuery.rows;
 
     const { month, year, estudiante } = req.query;
 
@@ -103,7 +105,8 @@ app.get('/summary', async (req, res) => {
         year: [],
         students: estudiantes,
         mensual: false,
-        individual: false
+        individual: false,
+        meses: meses
       });
     }
 
@@ -264,6 +267,18 @@ app.post('/edit_student/edit', (req, res) => {
     
     res.redirect('/students');
   });
+});
+
+app.post('/students/edit/:id', async (req, res) =>{
+  const studentId = req.params.id;
+  try {
+    await pool.query('CALL disable_student($1);', [studentId]);
+    res.redirect('/students'); 
+  } catch (err) {
+    console.error('Error guardando repertorio:', err);
+    res.status(500).send('Error interno');
+  }
+
 });
 
 

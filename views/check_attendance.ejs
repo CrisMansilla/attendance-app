@@ -5,8 +5,12 @@
         <form action="/summary" method="get" class="g-3 border p-3 rounded shadow-sm bg-light">
           <h2>Asistencia mensual total</h2>
           <div class="mb-3">
-            <label for="month">Mes de vista</label>
-            <input type="number" name="month" id="month" class="form-control" placeholder="Mes (1-12)" min="1" max="12">
+            <select name="month" id="month" class="form-select">
+              <option value="">Selecciona un mes</option>
+              <% meses.forEach(mes => { %>
+                <option value="<%= mes.mesesito %>"><%= mes.mesesito %></option>
+              <% }) %>
+            </select>
           </div>
           <div class="mb-3">
             <label for="year">Año de vista</label>
@@ -19,21 +23,22 @@
       <div class="col-md-6">
         <form action="/summary" method="get" class="g-3 border p-3 rounded shadow-sm bg-light">
           <h2>Asistencia mensual por estudiante</h2>
-          <div class="mb-3">
-            <label for="estudiante">Selecciona al estudiante</label>
-            <select name="estudiante" id="estudiante" class="form-select">
+          <select name="estudiante" id="estudiante" class="form-select">
               <option value="">Selecciona un estudiante</option>
               <% students.forEach(student => { %>
                 <option value="<%= student.aidi %>"><%= student.nombre %></option>
               <% }) %>
             </select>
+          <div class="mb-3">
+            <select name="month" id="month" class="form-select">
+              <option value="">Selecciona un mes</option>
+              <% meses.forEach(mes => { %>
+                <option value="<%= mes.mesesito %>"><%= mes.mesesito %></option>
+              <% }) %>
+          </select>
           </div>
           <div class="mb-3">
-            <label for="mes">Mes de vista</label>
-            <input type="number" name="month" id="month" class="form-control" placeholder="Mes (1-12)" min="1" max="12">
-          </div>
-          <div class="mb-3">
-            <label for="anio">Año de vista</label>
+            <label for="year">Año de vista</label>
             <input type="number" name="year" id="year" class="form-control" placeholder="Año (2025)" min="2025" value="2025">
           </div>
           <button type="submit" class="btn btn-primary">Ver Asistencia</button>
