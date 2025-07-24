@@ -120,7 +120,8 @@ app.get('/summary', async (req, res) => {
         month,
         year,
         mensual: true,
-        individual: false
+        individual: false,
+        meses: meses
       });
     }
 
@@ -134,7 +135,8 @@ app.get('/summary', async (req, res) => {
         month,
         year,
         individual: true,
-        mensual: false
+        mensual: false,
+        meses: meses
       });
     }
 
