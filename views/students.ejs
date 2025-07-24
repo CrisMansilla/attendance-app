@@ -24,7 +24,7 @@
           <% } %>
           <td>
             <a href="/students/edit/<%= student.aidi %>" class="btn btn-warning btn-sm">Editar</a>
-            <form id="disableForm-<%= student.aidi %>" action="/students/delete/<%= student.aidi %>" method="POST" class="d-inline">
+            <form id="disableForm-<%= student.aidi %>" action="/students/delete/<%= student.aidi %>" method="GET" class="d-inline">
               <button type="button" class="btn btn-danger btn-sm" onclick="confirmDisable('<%= student.aidi %>', '<%= student.nombre %>')">Deshabilitar</button>
             </form>
           </td>

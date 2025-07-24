@@ -78,12 +78,14 @@ BEGIN ATOMIC
 END;
 
 CREATE PROCEDURE disable_student(p_id INTEGER)
-LANGUAGE SQL
-BEGIN ATOMIC
-    update table student
-    set active=false
-    where id = p_id;
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    UPDATE student
+    SET active = false
+    WHERE id = p_id;
 END;
+$$;
 
 CREATE OR REPLACE FUNCTION get_student_repertoire(p_student_id INTEGER)
 RETURNS TABLE (nombre VARCHAR, fecha VARCHAR, pieza VARCHAR)
