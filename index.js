@@ -269,7 +269,7 @@ app.post('/edit_student/edit', (req, res) => {
   });
 });
 
-app.get('/students/edit/:id', async (req, res) =>{
+app.get('/students/disable/:id', async (req, res) =>{
   const studentId = req.params.id;
   try {
     await pool.query('CALL disable_student($1);', [studentId]);
