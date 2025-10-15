@@ -151,7 +151,8 @@ AS $$
     from student s
     where 
 	s.day_of_week = (select extract(DOW from NOW())) and
-    s.id not in (select student_id from attendance where to_char(date, 'DD/MM/YYYY') = to_char(NOW(), 'DD/MM/YYYY'));
+    s.id not in (select student_id from attendance where to_char(date, 'DD/MM/YYYY') = to_char(NOW(), 'DD/MM/YYYY'))
+    and s.active = true;
 $$;
 
 CREATE OR REPLACE FUNCTION check_attendance_student(p_id integer, p_mes integer, p_anio integer)

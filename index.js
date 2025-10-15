@@ -4,7 +4,7 @@ require('dotenv').config();
 const layouts = require('express-ejs-layouts');
 const path = require('path');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
@@ -17,8 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
+  connectionString: process.env.DATABASE_URL
 });
 
 app.get('/', (req, res) => {

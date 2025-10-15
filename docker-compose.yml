@@ -4,29 +4,25 @@ services:
       context: .
     ports:
       - "3000:3000"
-    volumes:
-      - ./:/app
-    env_file:
-      - .env
     environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/attendance
       - LANG=es_CL.UTF-8
       - LC_ALL=es_CL.UTF-8
     depends_on:
       - db
+    restart: always
 
   db:
-    image: postgres-escl
+    image: postgres:bookworm
     environment:
-      POSTGRES_INITDB_ARGS: "--locale-provider=libc --locale=es_CL.UTF-8 --encoding=UTF8"
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: attendance
-      LANG: es_CL.UTF-8
-      LC_ALL: es_CL.UTF-8
     ports:
       - "5432:5432"
     volumes:
       - pgdata16:/var/lib/postgresql/data
+    restart: always
 
 volumes:
   pgdata16:
