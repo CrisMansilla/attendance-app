@@ -3,7 +3,7 @@ services:
     build:
       context: .
     ports:
-      - "8081:8081"
+      - "3000:3000"
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/attendance
       - LANG=es_CL.UTF-8
